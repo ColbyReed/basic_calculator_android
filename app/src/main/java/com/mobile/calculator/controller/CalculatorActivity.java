@@ -59,6 +59,7 @@ public class CalculatorActivity extends AppCompatActivity {
         btnClear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //Clears calculation string.
                 txtCalculations.setText("");
                 isNeg = false;
                 isDecimal = false;
@@ -71,16 +72,31 @@ public class CalculatorActivity extends AppCompatActivity {
                 String number = txtCalculations.getText().toString();
                 int l = txtCalculations.getText().toString().length();
 
+                //Deletes last character in string and says part of string is positive if open parenthesis is removed, and positive if vice versa.
                 if(number.length() > 0){
                     number = number.substring(0, number.length() - 1);
                     if(txtCalculations.getText().toString().charAt(l-1)=='('){
                         isNeg = false;
+                    }else if(txtCalculations.getText().toString().charAt(l-1) == ')'){
+                        isNeg = true;
                     }
+                    if(txtCalculations.getText().toString().charAt(l-1) == '.'){
+                        isDecimal = false;
+                    }
+                    //Enables decimal placement if operator is deleted.
+                    if(txtCalculations.getText().toString().charAt(l-1) == '+' || txtCalculations.getText().toString().charAt(l-1) == '-' || txtCalculations.getText().toString().charAt(l-1) == '*' || txtCalculations.getText().toString().charAt(l-1) == '/') {
+                        isDecimal = false;
+                    }
+                    canAdd = true;
+                    canSub = true;
+                    canDiv = true;
+                    canMult = true;
                 }
                 txtCalculations.setText(number);
             }
         });
 
+        //Allows buttons 0 through 9 to insert respective numbers into calculation string
         btnOne.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -194,7 +210,8 @@ public class CalculatorActivity extends AppCompatActivity {
         btnDecimal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(txtCalculations.getText().toString().equals("")){
+                //If string is empty, will insert 0 and decimal
+                if(txtCalculations.getText().toString().isEmpty()){
                     txtCalculations.setText(txtCalculations.getText() + "0");
                     txtCalculations.setText(txtCalculations.getText() + ".");
                     isDecimal = true;
@@ -204,7 +221,7 @@ public class CalculatorActivity extends AppCompatActivity {
                     canMult = true;
                 }
                 int l = txtCalculations.getText().toString().length();
-
+                //Will insert a 0 and a decimal if last character in string is an operator
                 if(txtCalculations.getText().toString().charAt(l-1) == '+' || txtCalculations.getText().toString().charAt(l-1) == '-' || txtCalculations.getText().toString().charAt(l-1) == '/' || txtCalculations.getText().toString().charAt(l-1) == '*'){
                     StringBuilder sb = new StringBuilder(txtCalculations.getText().toString());
                     sb.insert(l, '0');
@@ -216,7 +233,7 @@ public class CalculatorActivity extends AppCompatActivity {
                     canDiv = true;
                     canMult = true;
                 }
-
+                //If there isn't a decimal near end of string, will add decimal.
                 if(txtCalculations.getText().toString().charAt(l-1) != '.' && !isDecimal){
                     StringBuilder sb = new StringBuilder(txtCalculations.getText().toString());
                     sb.insert(l, '.');
@@ -233,6 +250,7 @@ public class CalculatorActivity extends AppCompatActivity {
         btnAddition.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //Checks if allowed then adds addition operator and closed parenthesis if part of string was negative.
                 if (canAdd){
                     if (isNeg) {
                         txtCalculations.setText(txtCalculations.getText() + ")");
@@ -254,6 +272,7 @@ public class CalculatorActivity extends AppCompatActivity {
         btnSubtract.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //Checks if allowed then adds subtraction operator and closed parenthesis if part of string was negative.
                 if (canSub){
                     if (isNeg) {
                         txtCalculations.setText(txtCalculations.getText() + ")");
@@ -275,6 +294,7 @@ public class CalculatorActivity extends AppCompatActivity {
         btnDivide.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //Checks if allowed then adds division operator and closed parenthesis if part of string was negative.
                 if (canDiv){
                     if (isNeg) {
                         txtCalculations.setText(txtCalculations.getText() + ")");
@@ -296,6 +316,7 @@ public class CalculatorActivity extends AppCompatActivity {
         btnMultiply.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //Checks if allowed then adds multiplication operator and closed parenthesis if part of string was negative.
                 if (canMult){
                     if (isNeg) {
                         txtCalculations.setText(txtCalculations.getText() + ")");
@@ -321,12 +342,14 @@ public class CalculatorActivity extends AppCompatActivity {
                 boolean switched = false;
                 boolean emptySwitch = false;
 
+                //Checks if string is negative
                 if(txtCalculations.getText().toString().equals("(-")){
                     txtCalculations.setText("");
                     isNeg = false;
                     emptySwitch = true;
                 }
                 if(isNeg) {
+                    //If positive, will remove open parenthesis and negative sign
                     for (int i = txtCalculations.getText().toString().length() - 1; i >= 0 && !switched; i--) {
                         if (txtCalculations.getText().toString().charAt(i) == '-' && txtCalculations.getText().toString().charAt(i - 1) == '(') {
                             StringBuilder sb = new StringBuilder(txtCalculations.getText().toString());
@@ -339,6 +362,7 @@ public class CalculatorActivity extends AppCompatActivity {
                     isNeg = false;
                 }else if(!isNeg && !isEmpty){
                     for (int i = txtCalculations.getText().toString().length() - 1; i >= 0 && !switched; i--) {
+                        //will there is an operator near end of string, will insert open parenthesis negative sign after operator.
                         if (txtCalculations.getText().toString().charAt(i) == '+' || txtCalculations.getText().toString().charAt(i) == '-' || txtCalculations.getText().toString().charAt(i) == '/' || txtCalculations.getText().toString().charAt(i) == '*') {
                             StringBuilder sb = new StringBuilder(txtCalculations.getText().toString());
                             sb.insert(i+1, '(');
@@ -347,6 +371,7 @@ public class CalculatorActivity extends AppCompatActivity {
                             txtCalculations.setText(sb);
                             isNeg=true;
                         }
+                        //if calculation string is positive and not empty, will insert open parenthesis and negative sign to beginning of string
                         if(i==0){
                             StringBuilder sb = new StringBuilder(txtCalculations.getText().toString());
                             sb.insert(i, '(');
@@ -357,6 +382,7 @@ public class CalculatorActivity extends AppCompatActivity {
                         }
                     }
                 }
+                //If string is empty, will insert open parenthesis and negative sign.
                 if(txtCalculations.getText().toString().isEmpty() && !emptySwitch){
                     txtCalculations.setText(txtCalculations.getText() + "(-");
                     isNeg = true;
@@ -368,31 +394,50 @@ public class CalculatorActivity extends AppCompatActivity {
         btnEqual.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //If calculation string is empty, insert 0 to string.
+                if(txtCalculations.getText().toString().isEmpty()){
+                    txtCalculations.setText("0");
+                }
+                //Will insert closed parenthesis if last number in calculation string does not have one
                 int l = txtCalculations.getText().toString().length();
                 if(txtCalculations.getText().toString().charAt(l-1) != ')' && isNeg){
                     StringBuilder sb = new StringBuilder(txtCalculations.getText().toString());
                     sb.insert(l, ')');
                     txtCalculations.setText(sb);
                 }
+                //Will insert zero to end of calculation string if last character in string is an operator.
+                if(txtCalculations.getText().toString().charAt(l-1) == '+' || txtCalculations.getText().toString().charAt(l-1) == '-' || txtCalculations.getText().toString().charAt(l-1) == '*' || txtCalculations.getText().toString().charAt(l-1) == '/'){
+                    StringBuilder sb = new StringBuilder(txtCalculations.getText().toString());
+                    sb.insert(l, '0');
+                    txtCalculations.setText(sb);
+                }
 
+                //Runs full calculation string through a javascript interpreter using Mozilla Rhino
                 Context context = Context.enter();
                 context.setOptimizationLevel(-1);
                 Scriptable scope = context.initStandardObjects();
                 Object result = context.evaluateString(scope, txtCalculations.getText().toString(), "result", 1, null);
                 Log.d("Result", "" + result);
-                boolean rounded = false;
-                for (int i = result.toString().length() - 1; i >= 0 && !rounded; i--) {
-                    if (result.toString().charAt(i) == '0' && result.toString().charAt(i - 1) == '.') {
-                        StringBuilder sb = new StringBuilder(result.toString());
+
+                //Converts result to float for decimal precision
+                Float floatResult = Float.valueOf(result.toString());
+
+                //Removes unnecessary extra decimal on whole numbers
+                int i = floatResult.toString().length() - 1; {
+                    if (floatResult.toString().charAt(i) == '0' && floatResult.toString().charAt(i - 1) == '.'){
+                        StringBuilder sb = new StringBuilder(floatResult.toString());
                         sb.deleteCharAt(i);
                         sb.deleteCharAt(i - 1);
-                        rounded = true;
                         txtCalculations.setText("");
                         txtCalculations.setText(sb);
                     }
                     else{
                         txtCalculations.setText("");
-                        txtCalculations.setText(txtCalculations.getText() + result.toString());
+                        txtCalculations.setText(txtCalculations.getText() + floatResult.toString());
+                    }
+                    //If NaN insert 0 to calculation string
+                    if(floatResult.toString().contains("NaN")){
+                        txtCalculations.setText("0");
                     }
                 }
         }});
