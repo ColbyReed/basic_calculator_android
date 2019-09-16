@@ -23,6 +23,7 @@ public class CalculatorActivity extends AppCompatActivity {
     boolean isEmpty;
     boolean isDecimal = false;
     boolean canAdd, canSub, canDiv, canMult;
+    boolean canPush = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,36 +64,51 @@ public class CalculatorActivity extends AppCompatActivity {
                 txtCalculations.setText("");
                 isNeg = false;
                 isDecimal = false;
+                canPush = true;
             }
         });
 
         btnBackspace.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String number = txtCalculations.getText().toString();
-                int l = txtCalculations.getText().toString().length();
+                if (canPush) {
+                    String number = txtCalculations.getText().toString();
+                    int l = txtCalculations.getText().toString().length();
 
-                //Deletes last character in string and says part of string is positive if open parenthesis is removed, and positive if vice versa.
-                if(number.length() > 0){
-                    number = number.substring(0, number.length() - 1);
-                    if(txtCalculations.getText().toString().charAt(l-1)=='('){
-                        isNeg = false;
-                    }else if(txtCalculations.getText().toString().charAt(l-1) == ')'){
-                        isNeg = true;
+                    //Deletes last character in string and says part of string is positive if open parenthesis is removed, and positive if vice versa.
+                    if (number.length() > 0) {
+                        number = number.substring(0, number.length() - 1);
+                        if (txtCalculations.getText().toString().charAt(l - 1) == '(') {
+                            isNeg = false;
+                        } else if (txtCalculations.getText().toString().charAt(l - 1) == ')') {
+                            isNeg = true;
+                        }
+                        if (txtCalculations.getText().toString().charAt(l - 1) == '.') {
+                            isDecimal = false;
+                        }
+                        //Enables decimal placement if operator is deleted.
+                        if (txtCalculations.getText().toString().charAt(l - 1) == '+' || txtCalculations.getText().toString().charAt(l - 1) == '-' || txtCalculations.getText().toString().charAt(l - 1) == '*' || txtCalculations.getText().toString().charAt(l - 1) == '/') {
+                            isDecimal = false;
+                        }
+                        if (txtCalculations.getText().toString().charAt(l - 1) == '+' || txtCalculations.getText().toString().charAt(l - 1) == '-' || txtCalculations.getText().toString().charAt(l - 1) == '*' || txtCalculations.getText().toString().charAt(l - 1) == '/' && txtCalculations.getText().toString().charAt(l - 2) == ')') {
+                            isDecimal = false;
+                            isNeg = true;
+                        }
+                        if (txtCalculations.getText().toString().charAt(l - 2) == '(' && txtCalculations.getText().toString().charAt(l - 1) == '-' && txtCalculations.getText().toString().charAt(l) == ')') {
+                            StringBuilder sb = new StringBuilder(txtCalculations.getText().toString());
+                            sb.deleteCharAt(l);
+                            sb.deleteCharAt(l - 1);
+                            sb.deleteCharAt(l - 2);
+                            txtCalculations.setText(sb);
+                            isDecimal = false;
+                        }
+                        canAdd = true;
+                        canSub = true;
+                        canDiv = true;
+                        canMult = true;
                     }
-                    if(txtCalculations.getText().toString().charAt(l-1) == '.'){
-                        isDecimal = false;
-                    }
-                    //Enables decimal placement if operator is deleted.
-                    if(txtCalculations.getText().toString().charAt(l-1) == '+' || txtCalculations.getText().toString().charAt(l-1) == '-' || txtCalculations.getText().toString().charAt(l-1) == '*' || txtCalculations.getText().toString().charAt(l-1) == '/') {
-                        isDecimal = false;
-                    }
-                    canAdd = true;
-                    canSub = true;
-                    canDiv = true;
-                    canMult = true;
+                    txtCalculations.setText(number);
                 }
-                txtCalculations.setText(number);
             }
         });
 
@@ -100,149 +116,171 @@ public class CalculatorActivity extends AppCompatActivity {
         btnOne.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                txtCalculations.setText(txtCalculations.getText() + "1");
-                canAdd = true;
-                canSub = true;
-                canDiv = true;
-                canMult = true;
+                if(canPush) {
+                    txtCalculations.setText(txtCalculations.getText() + "1");
+                    canAdd = true;
+                    canSub = true;
+                    canDiv = true;
+                    canMult = true;
+                }
             }
         });
 
         btnTwo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                txtCalculations.setText(txtCalculations.getText() + "2");
-                canAdd = true;
-                canSub = true;
-                canDiv = true;
-                canMult = true;
+                if(canPush) {
+                    txtCalculations.setText(txtCalculations.getText() + "2");
+                    canAdd = true;
+                    canSub = true;
+                    canDiv = true;
+                    canMult = true;
+                }
             }
         });
 
         btnThree.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                txtCalculations.setText(txtCalculations.getText() + "3");
-                canAdd = true;
-                canSub = true;
-                canDiv = true;
-                canMult = true;
+                if(canPush) {
+                    txtCalculations.setText(txtCalculations.getText() + "3");
+                    canAdd = true;
+                    canSub = true;
+                    canDiv = true;
+                    canMult = true;
+                }
             }
         });
 
         btnFour.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                txtCalculations.setText(txtCalculations.getText() + "4");
-                canAdd = true;
-                canSub = true;
-                canDiv = true;
-                canMult = true;
+                if(canPush) {
+                    txtCalculations.setText(txtCalculations.getText() + "4");
+                    canAdd = true;
+                    canSub = true;
+                    canDiv = true;
+                    canMult = true;
+                }
             }
         });
 
         btnFive.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                txtCalculations.setText(txtCalculations.getText() + "5");
-                canAdd = true;
-                canSub = true;
-                canDiv = true;
-                canMult = true;
+                if(canPush) {
+                    txtCalculations.setText(txtCalculations.getText() + "5");
+                    canAdd = true;
+                    canSub = true;
+                    canDiv = true;
+                    canMult = true;
+                }
             }
         });
 
         btnSix.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                txtCalculations.setText(txtCalculations.getText() + "6");
-                canAdd = true;
-                canSub = true;
-                canDiv = true;
-                canMult = true;
+                if(canPush) {
+                    txtCalculations.setText(txtCalculations.getText() + "6");
+                    canAdd = true;
+                    canSub = true;
+                    canDiv = true;
+                    canMult = true;
+                }
             }
         });
 
         btnSeven.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                txtCalculations.setText(txtCalculations.getText() + "7");
-                canAdd = true;
-                canSub = true;
-                canDiv = true;
-                canMult = true;
+                if(canPush) {
+                    txtCalculations.setText(txtCalculations.getText() + "7");
+                    canAdd = true;
+                    canSub = true;
+                    canDiv = true;
+                    canMult = true;
+                }
             }
         });
 
         btnEight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                txtCalculations.setText(txtCalculations.getText() + "8");
-                canAdd = true;
-                canSub = true;
-                canDiv = true;
-                canMult = true;
+                if(canPush) {
+                    txtCalculations.setText(txtCalculations.getText() + "8");
+                    canAdd = true;
+                    canSub = true;
+                    canDiv = true;
+                    canMult = true;
+                }
             }
         });
 
         btnNine.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                txtCalculations.setText(txtCalculations.getText() + "9");
-                canAdd = true;
-                canSub = true;
-                canDiv = true;
-                canMult = true;
+                if(canPush) {
+                    txtCalculations.setText(txtCalculations.getText() + "9");
+                    canAdd = true;
+                    canSub = true;
+                    canDiv = true;
+                    canMult = true;
+                }
             }
         });
 
         btnZero.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                txtCalculations.setText(txtCalculations.getText() + "0");
-                canAdd = true;
-                canSub = true;
-                canDiv = true;
-                canMult = true;
+                if(canPush) {
+                    txtCalculations.setText(txtCalculations.getText() + "0");
+                    canAdd = true;
+                    canSub = true;
+                    canDiv = true;
+                    canMult = true;
+                }
             }
         });
 
         btnDecimal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //If string is empty, will insert 0 and decimal
-                if(txtCalculations.getText().toString().isEmpty()){
-                    txtCalculations.setText(txtCalculations.getText() + "0");
-                    txtCalculations.setText(txtCalculations.getText() + ".");
-                    isDecimal = true;
-                    canAdd = true;
-                    canSub = true;
-                    canDiv = true;
-                    canMult = true;
-                }
-                int l = txtCalculations.getText().toString().length();
-                //Will insert a 0 and a decimal if last character in string is an operator
-                if(txtCalculations.getText().toString().charAt(l-1) == '+' || txtCalculations.getText().toString().charAt(l-1) == '-' || txtCalculations.getText().toString().charAt(l-1) == '/' || txtCalculations.getText().toString().charAt(l-1) == '*'){
-                    StringBuilder sb = new StringBuilder(txtCalculations.getText().toString());
-                    sb.insert(l, '0');
-                    sb.insert(l+1, '.');
-                    txtCalculations.setText(sb);
-                    isDecimal = true;
-                    canAdd = true;
-                    canSub = true;
-                    canDiv = true;
-                    canMult = true;
-                }
-                //If there isn't a decimal near end of string, will add decimal.
-                if(txtCalculations.getText().toString().charAt(l-1) != '.' && !isDecimal){
-                    StringBuilder sb = new StringBuilder(txtCalculations.getText().toString());
-                    sb.insert(l, '.');
-                    txtCalculations.setText(sb);
-                    isDecimal = true;
-                    canAdd = true;
-                    canSub = true;
-                    canDiv = true;
-                    canMult = true;
+                if (canPush) {
+                    //If string is empty, will insert 0 and decimal
+                    if (txtCalculations.getText().toString().isEmpty()) {
+                        txtCalculations.setText(txtCalculations.getText() + "0");
+                        txtCalculations.setText(txtCalculations.getText() + ".");
+                        isDecimal = true;
+                        canAdd = true;
+                        canSub = true;
+                        canDiv = true;
+                        canMult = true;
+                    }
+                    int l = txtCalculations.getText().toString().length();
+                    //Will insert a 0 and a decimal if last character in string is an operator
+                    if (txtCalculations.getText().toString().charAt(l - 1) == '+' || txtCalculations.getText().toString().charAt(l - 1) == '-' || txtCalculations.getText().toString().charAt(l - 1) == '/' || txtCalculations.getText().toString().charAt(l - 1) == '*') {
+                        StringBuilder sb = new StringBuilder(txtCalculations.getText().toString());
+                        sb.insert(l, '0');
+                        sb.insert(l + 1, '.');
+                        txtCalculations.setText(sb);
+                        isDecimal = true;
+                        canAdd = true;
+                        canSub = true;
+                        canDiv = true;
+                        canMult = true;
+                    }
+                    //If there isn't a decimal near end of string, will add decimal.
+                    if (txtCalculations.getText().toString().charAt(l - 1) != '.' && !isDecimal) {
+                        StringBuilder sb = new StringBuilder(txtCalculations.getText().toString());
+                        sb.insert(l, '.');
+                        txtCalculations.setText(sb);
+                        isDecimal = true;
+                        canAdd = true;
+                        canSub = true;
+                        canDiv = true;
+                        canMult = true;
+                    }
                 }
             }
         });
@@ -260,6 +298,7 @@ public class CalculatorActivity extends AppCompatActivity {
                     } else {
                         txtCalculations.setText(txtCalculations.getText() + "+");
                         isDecimal = false;
+                        isNeg = false;
                     }
                     canAdd = false;
                     canSub = false;
@@ -282,6 +321,7 @@ public class CalculatorActivity extends AppCompatActivity {
                     } else {
                         txtCalculations.setText(txtCalculations.getText() + "-");
                         isDecimal = false;
+                        isNeg = false;
                     }
                     canAdd = false;
                     canSub = false;
@@ -304,6 +344,7 @@ public class CalculatorActivity extends AppCompatActivity {
                     } else {
                         txtCalculations.setText(txtCalculations.getText() + "/");
                         isDecimal = false;
+                        isNeg = false;
                     }
                     canAdd = false;
                     canSub = false;
@@ -326,6 +367,7 @@ public class CalculatorActivity extends AppCompatActivity {
                     } else {
                         txtCalculations.setText(txtCalculations.getText() + "*");
                         isDecimal = false;
+                        isNeg = false;
                     }
                     canAdd = false;
                     canSub = false;
@@ -338,56 +380,63 @@ public class CalculatorActivity extends AppCompatActivity {
         btnPosNeg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (canPush) {
 
-                boolean switched = false;
-                boolean emptySwitch = false;
+                    boolean switched = false;
+                    boolean emptySwitch = false;
 
-                //Checks if string is negative
-                if(txtCalculations.getText().toString().equals("(-")){
-                    txtCalculations.setText("");
-                    isNeg = false;
-                    emptySwitch = true;
-                }
-                if(isNeg) {
-                    //If positive, will remove open parenthesis and negative sign
-                    for (int i = txtCalculations.getText().toString().length() - 1; i >= 0 && !switched; i--) {
-                        if (txtCalculations.getText().toString().charAt(i) == '-' && txtCalculations.getText().toString().charAt(i - 1) == '(') {
-                            StringBuilder sb = new StringBuilder(txtCalculations.getText().toString());
-                            sb.deleteCharAt(i);
-                            sb.deleteCharAt(i - 1);
-                            switched = true;
-                            txtCalculations.setText(sb);
+                    //Checks if string is negative
+                    if (txtCalculations.getText().toString().equals("(-")) {
+                        txtCalculations.setText("");
+                        isNeg = false;
+                        emptySwitch = true;
+                    }
+                    if (isNeg) {
+                        //If positive, will remove open parenthesis and negative sign
+                        int l = txtCalculations.getText().toString().length();
+                        for (int i = txtCalculations.getText().toString().length() - 1; i >= 0 && !switched; i--) {
+                            if (txtCalculations.getText().toString().charAt(i) == '-' && txtCalculations.getText().toString().charAt(i - 1) == '(') {
+                                StringBuilder sb = new StringBuilder(txtCalculations.getText().toString());
+
+                                if (sb.charAt(l - 1) == ')') {
+                                    sb.deleteCharAt(l - 1);
+                                }
+                                sb.deleteCharAt(i);
+                                sb.deleteCharAt(i - 1);
+                                switched = true;
+
+                                txtCalculations.setText(sb);
+                            }
+                        }
+                        isNeg = false;
+                    } else if (!isNeg && !isEmpty) {
+                        for (int i = txtCalculations.getText().toString().length() - 1; i >= 0 && !switched; i--) {
+                            //will there is an operator near end of string, will insert open parenthesis negative sign after operator.
+                            if (txtCalculations.getText().toString().charAt(i) == '+' || txtCalculations.getText().toString().charAt(i) == '-' || txtCalculations.getText().toString().charAt(i) == '/' || txtCalculations.getText().toString().charAt(i) == '*') {
+                                StringBuilder sb = new StringBuilder(txtCalculations.getText().toString());
+                                sb.insert(i + 1, '(');
+                                sb.insert(i + 2, '-');
+                                switched = true;
+                                txtCalculations.setText(sb);
+                                isNeg = true;
+                            }
+                            //if calculation string is positive and not empty, will insert open parenthesis and negative sign to beginning of string
+                            if (i == 0) {
+                                StringBuilder sb = new StringBuilder(txtCalculations.getText().toString());
+                                sb.insert(i, '(');
+                                sb.insert(i + 1, '-');
+                                switched = true;
+                                txtCalculations.setText(sb);
+                                isNeg = true;
+                            }
                         }
                     }
-                    isNeg = false;
-                }else if(!isNeg && !isEmpty){
-                    for (int i = txtCalculations.getText().toString().length() - 1; i >= 0 && !switched; i--) {
-                        //will there is an operator near end of string, will insert open parenthesis negative sign after operator.
-                        if (txtCalculations.getText().toString().charAt(i) == '+' || txtCalculations.getText().toString().charAt(i) == '-' || txtCalculations.getText().toString().charAt(i) == '/' || txtCalculations.getText().toString().charAt(i) == '*') {
-                            StringBuilder sb = new StringBuilder(txtCalculations.getText().toString());
-                            sb.insert(i+1, '(');
-                            sb.insert(i+2, '-');
-                            switched = true;
-                            txtCalculations.setText(sb);
-                            isNeg=true;
-                        }
-                        //if calculation string is positive and not empty, will insert open parenthesis and negative sign to beginning of string
-                        if(i==0){
-                            StringBuilder sb = new StringBuilder(txtCalculations.getText().toString());
-                            sb.insert(i, '(');
-                            sb.insert(i+1, '-');
-                            switched = true;
-                            txtCalculations.setText(sb);
-                            isNeg=true;
-                        }
+                    //If string is empty, will insert open parenthesis and negative sign.
+                    if (txtCalculations.getText().toString().isEmpty() && !emptySwitch) {
+                        txtCalculations.setText(txtCalculations.getText() + "(-");
+                        isNeg = true;
                     }
                 }
-                //If string is empty, will insert open parenthesis and negative sign.
-                if(txtCalculations.getText().toString().isEmpty() && !emptySwitch){
-                    txtCalculations.setText(txtCalculations.getText() + "(-");
-                    isNeg = true;
-                }
-
             }
         });
 
@@ -436,8 +485,12 @@ public class CalculatorActivity extends AppCompatActivity {
                         txtCalculations.setText(txtCalculations.getText() + floatResult.toString());
                     }
                     //If NaN insert 0 to calculation string
-                    if(floatResult.toString().contains("NaN")){
-                        txtCalculations.setText("0");
+                    if(floatResult.toString().contains("NaN") || floatResult.toString().contains("Infinity")){
+                        canPush = false;
+                        canAdd = false;
+                        canSub = false;
+                        canDiv = false;
+                        canMult = false;
                     }
                 }
         }});
