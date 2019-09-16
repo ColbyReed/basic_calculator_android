@@ -198,6 +198,10 @@ public class CalculatorActivity extends AppCompatActivity {
                     txtCalculations.setText(txtCalculations.getText() + "0");
                     txtCalculations.setText(txtCalculations.getText() + ".");
                     isDecimal = true;
+                    canAdd = true;
+                    canSub = true;
+                    canDiv = true;
+                    canMult = true;
                 }
                 int l = txtCalculations.getText().toString().length();
 
@@ -207,6 +211,10 @@ public class CalculatorActivity extends AppCompatActivity {
                     sb.insert(l+1, '.');
                     txtCalculations.setText(sb);
                     isDecimal = true;
+                    canAdd = true;
+                    canSub = true;
+                    canDiv = true;
+                    canMult = true;
                 }
 
                 if(txtCalculations.getText().toString().charAt(l-1) != '.' && !isDecimal){
@@ -214,6 +222,10 @@ public class CalculatorActivity extends AppCompatActivity {
                     sb.insert(l, '.');
                     txtCalculations.setText(sb);
                     isDecimal = true;
+                    canAdd = true;
+                    canSub = true;
+                    canDiv = true;
+                    canMult = true;
                 }
             }
         });
@@ -344,7 +356,6 @@ public class CalculatorActivity extends AppCompatActivity {
                     }
                     isNeg=true;
                 }
-                String calculations = txtCalculations.getText().toString();
                 if(txtCalculations.getText().toString().isEmpty() && !emptySwitch){
                     txtCalculations.setText(txtCalculations.getText() + "(-");
                     isNeg = true;
@@ -368,16 +379,21 @@ public class CalculatorActivity extends AppCompatActivity {
                 Scriptable scope = context.initStandardObjects();
                 Object result = context.evaluateString(scope, txtCalculations.getText().toString(), "result", 1, null);
                 Log.d("Result", "" + result);
-                if (txtCalculations.getText().toString().contains(".") || result.toString().length() >= 10 || Double.valueOf(result.toString()) < 1) {
-                    txtCalculations.setText("");
-                    txtCalculations.setText(txtCalculations.getText() + result.toString());
-                }else if(result.toString().length() < 10){
-                    Double doubleResult = Double.valueOf(result.toString());
-                    Integer intResult = doubleResult.intValue();
-                    txtCalculations.setText("");
-                    txtCalculations.setText(txtCalculations.getText() + intResult.toString());
+                boolean rounded = false;
+                for (int i = result.toString().length() - 1; i >= 0 && !rounded; i--) {
+                    if (result.toString().charAt(i) == '0' && result.toString().charAt(i - 1) == '.') {
+                        StringBuilder sb = new StringBuilder(result.toString());
+                        sb.deleteCharAt(i);
+                        sb.deleteCharAt(i - 1);
+                        rounded = true;
+                        txtCalculations.setText("");
+                        txtCalculations.setText(sb);
+                    }
+                    else{
+                        txtCalculations.setText("");
+                        txtCalculations.setText(txtCalculations.getText() + result.toString());
+                    }
                 }
-            }
-        });
+        }});
     }
 }
