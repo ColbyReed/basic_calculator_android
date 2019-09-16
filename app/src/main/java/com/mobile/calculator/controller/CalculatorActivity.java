@@ -373,7 +373,7 @@ public class CalculatorActivity extends AppCompatActivity {
                     txtCalculations.setText(txtCalculations.getText() + result.toString());
                 }else if(result.toString().length() < 10){
                     Double doubleResult = Double.valueOf(result.toString());
-                    int intResult = doubleResult.intValue();
+                    Integer intResult = doubleResult.intValue();
                     txtCalculations.setText("");
                     txtCalculations.setText(txtCalculations.getText() + intResult.toString());
                 }
