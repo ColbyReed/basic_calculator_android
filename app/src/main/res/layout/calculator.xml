@@ -8,8 +8,6 @@
     tools:context=".controller.CalculatorActivity"
     >
 
-
-
     <TableLayout
         android:id="@+id/tableLayout"
         android:layout_width="match_parent"
@@ -18,11 +16,12 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:stretchColumns="*"
-        android:weightSum="5">
+        android:shrinkColumns="*"
+        android:weightSum="5"
+>
 
         <TableRow
-            android:layout_height="match_parent">
-
+            android:layout_width="match_parent">
 
             <TextView
                 android:id="@+id/txtCalculations"
@@ -30,11 +29,16 @@
                 android:layout_height="120dp"
                 android:layout_span="4"
                 android:layout_weight="1"
-                android:gravity="center|end"
+                android:gravity="end|bottom"
                 android:textColor="#000000"
                 android:textSize="50sp"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-
+                android:scrollbars="vertical"
+                android:scrollHorizontally="false"
+                android:scrollbarStyle="outsideOverlay"
+                android:breakStrategy="simple"
+                android:paddingStart="15dp"
+                android:paddingEnd="35dp"
                 />
         </TableRow>
 
@@ -48,9 +52,8 @@
                 style="?android:attr/buttonBarButtonStyle"
                 android:text="@string/c"
                 android:layout_weight="1"
-                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                app:autoSizeTextType="uniform"
+                android:textSize="50sp"
                 android:textColor="#000000"/>
 
             <Button
@@ -59,7 +62,7 @@
                 android:text="@string/posNeg"
                 android:layout_weight="1"
                 android:layout_height="match_parent"
-                app:autoSizeTextType="uniform"
+                android:textSize="50sp"
                 android:textColor="#000000"/>
 
             <Button
@@ -68,7 +71,7 @@
                 android:text="@string/backspace"
                 android:layout_weight="1"
                 android:layout_height="match_parent"
-                app:autoSizeTextType="uniform"
+                android:textSize="50sp"
                 android:textColor="#000000"/>
 
             <Button
@@ -77,13 +80,13 @@
                 android:text="@string/divide"
                 android:layout_weight="1"
                 android:layout_height="match_parent"
-                app:autoSizeTextType="uniform"
+                android:textSize="50sp"
                 android:textColor="#000000"/>
         </TableRow>
 
         <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
             >
 
@@ -93,7 +96,7 @@
                 android:text="@string/_7"
                 android:layout_weight="1"
                 android:layout_height="match_parent"
-                app:autoSizeTextType="uniform"
+                android:textSize="50sp"
                 android:textColor="#000000"/>
 
             <Button
@@ -102,7 +105,7 @@
                 android:text="@string/_8"
                 android:layout_weight="1"
                 android:layout_height="match_parent"
-                app:autoSizeTextType="uniform"
+                android:textSize="50sp"
                 android:textColor="#000000"/>
 
             <Button
@@ -111,7 +114,7 @@
                 android:text="@string/_9"
                 android:layout_weight="1"
                 android:layout_height="match_parent"
-                app:autoSizeTextType="uniform"
+                android:textSize="50sp"
                 android:textColor="#000000"/>
 
             <Button
@@ -120,13 +123,13 @@
                 android:text="@string/multiply"
                 android:layout_weight="1"
                 android:layout_height="match_parent"
-                app:autoSizeTextType="uniform"
+                android:textSize="50sp"
                 android:textColor="#000000"/>
         </TableRow>
 
         <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_weight="1">
 
             <Button
@@ -135,7 +138,7 @@
                 android:text="@string/_4"
                 android:layout_weight="1"
                 android:layout_height="match_parent"
-                app:autoSizeTextType="uniform"
+                android:textSize="50sp"
                 android:textColor="#000000"/>
 
             <Button
@@ -144,7 +147,7 @@
                 android:text="@string/_5"
                 android:layout_weight="1"
                 android:layout_height="match_parent"
-                app:autoSizeTextType="uniform"
+                android:textSize="50sp"
                 android:textColor="#000000"/>
 
             <Button
@@ -153,7 +156,7 @@
                 android:text="@string/_6"
                 android:layout_weight="1"
                 android:layout_height="match_parent"
-                app:autoSizeTextType="uniform"
+                android:textSize="50sp"
                 android:textColor="#000000"/>
 
             <Button
@@ -162,13 +165,13 @@
                 android:text="@string/subtract"
                 android:layout_weight="1"
                 android:layout_height="match_parent"
-                app:autoSizeTextType="uniform"
+                android:textSize="50sp"
                 android:textColor="#000000"/>
         </TableRow>
 
         <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_weight="1">
 
             <Button
@@ -177,7 +180,7 @@
                 android:text="@string/_1"
                 android:layout_weight="1"
                 android:layout_height="match_parent"
-                app:autoSizeTextType="uniform"
+                android:textSize="50sp"
                 android:textColor="#000000"/>
 
             <Button
@@ -186,7 +189,7 @@
                 android:text="@string/_2"
                 android:layout_weight="1"
                 android:layout_height="match_parent"
-                app:autoSizeTextType="uniform"
+                android:textSize="50sp"
                 android:textColor="#000000"/>
 
             <Button
@@ -195,7 +198,7 @@
                 android:text="@string/_3"
                 android:layout_weight="1"
                 android:layout_height="match_parent"
-                app:autoSizeTextType="uniform"
+                android:textSize="50sp"
                 android:textColor="#000000"/>
 
             <Button
@@ -204,13 +207,13 @@
                 android:text="@string/addition"
                 android:layout_weight="1"
                 android:layout_height="match_parent"
-                app:autoSizeTextType="uniform"
+                android:textSize="50sp"
                 android:textColor="#000000"/>
         </TableRow>
 
         <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_weight="1">
 
             <Button
@@ -219,7 +222,7 @@
                 android:text="@string/decimal"
                 android:layout_weight="1"
                 android:layout_height="match_parent"
-                app:autoSizeTextType="uniform"
+                android:textSize="50sp"
                 android:textColor="#000000"/>
 
             <Button
@@ -228,7 +231,7 @@
                 android:text="@string/_0"
                 android:layout_weight="1"
                 android:layout_height="match_parent"
-                app:autoSizeTextType="uniform"
+                android:textSize="50sp"
                 android:textColor="#000000"/>
 
             <Button
@@ -238,7 +241,7 @@
                 android:text="@string/equal"
                 android:layout_weight="1"
                 android:layout_height="match_parent"
-                app:autoSizeTextType="uniform"
+                android:textSize="50sp"
                 android:textColor="#000000"/>
         </TableRow>
     </TableLayout>
