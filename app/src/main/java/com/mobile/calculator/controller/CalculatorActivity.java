@@ -345,6 +345,7 @@ public class CalculatorActivity extends AppCompatActivity {
                             sb.insert(i+2, '-');
                             switched = true;
                             txtCalculations.setText(sb);
+                            isNeg=true;
                         }
                         if(i==0){
                             StringBuilder sb = new StringBuilder(txtCalculations.getText().toString());
@@ -352,9 +353,9 @@ public class CalculatorActivity extends AppCompatActivity {
                             sb.insert(i+1, '-');
                             switched = true;
                             txtCalculations.setText(sb);
+                            isNeg=true;
                         }
                     }
-                    isNeg=true;
                 }
                 if(txtCalculations.getText().toString().isEmpty() && !emptySwitch){
                     txtCalculations.setText(txtCalculations.getText() + "(-");
