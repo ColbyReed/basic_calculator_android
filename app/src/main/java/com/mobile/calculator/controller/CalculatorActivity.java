@@ -153,6 +153,7 @@ public class CalculatorActivity extends AppCompatActivity {
                     canSub = true;
                     canDiv = true;
                     canMult = true;
+                    isNeg = false;
                 }
             }
         });
@@ -173,6 +174,7 @@ public class CalculatorActivity extends AppCompatActivity {
                     canSub = true;
                     canDiv = true;
                     canMult = true;
+                    isNeg = false;
                 }
             }
         });
@@ -193,6 +195,7 @@ public class CalculatorActivity extends AppCompatActivity {
                     canSub = true;
                     canDiv = true;
                     canMult = true;
+                    isNeg = false;
                 }
             }
         });
@@ -213,6 +216,7 @@ public class CalculatorActivity extends AppCompatActivity {
                     canSub = true;
                     canDiv = true;
                     canMult = true;
+                    isNeg = false;
                 }
             }
         });
@@ -233,6 +237,7 @@ public class CalculatorActivity extends AppCompatActivity {
                     canSub = true;
                     canDiv = true;
                     canMult = true;
+                    isNeg = false;
                 }
             }
         });
@@ -253,6 +258,7 @@ public class CalculatorActivity extends AppCompatActivity {
                     canSub = true;
                     canDiv = true;
                     canMult = true;
+                    isNeg = false;
                 }
             }
         });
@@ -273,6 +279,7 @@ public class CalculatorActivity extends AppCompatActivity {
                     canSub = true;
                     canDiv = true;
                     canMult = true;
+                    isNeg = false;
                 }
             }
         });
@@ -293,6 +300,7 @@ public class CalculatorActivity extends AppCompatActivity {
                     canSub = true;
                     canDiv = true;
                     canMult = true;
+                    isNeg = false;
                 }
             }
         });
@@ -313,6 +321,7 @@ public class CalculatorActivity extends AppCompatActivity {
                     canSub = true;
                     canDiv = true;
                     canMult = true;
+                    isNeg = false;
                 }
             }
         });
@@ -333,6 +342,7 @@ public class CalculatorActivity extends AppCompatActivity {
                     canSub = true;
                     canDiv = true;
                     canMult = true;
+                    isNeg = false;
                 }
             }
         });
@@ -392,6 +402,7 @@ public class CalculatorActivity extends AppCompatActivity {
                     canSub = true;
                     canDiv = true;
                     canMult = true;
+                    isNeg = false;
                 }
             }
         });
@@ -424,6 +435,7 @@ public class CalculatorActivity extends AppCompatActivity {
                         btnBackspace.performClick();
                         isNeg = false;
                     }
+                    canPush = true;
                     canAdd = false;
                     canSub = false;
                     canDiv = false;
@@ -460,6 +472,7 @@ public class CalculatorActivity extends AppCompatActivity {
                         btnBackspace.performClick();
                         isNeg = false;
                     }
+                    canPush = true;
                     canAdd = false;
                     canSub = false;
                     canDiv = false;
@@ -496,6 +509,7 @@ public class CalculatorActivity extends AppCompatActivity {
                         btnBackspace.performClick();
                         isNeg = false;
                     }
+                    canPush = true;
                     canAdd = false;
                     canSub = false;
                     canDiv = false;
@@ -532,6 +546,7 @@ public class CalculatorActivity extends AppCompatActivity {
                         btnBackspace.performClick();
                         isNeg = false;
                     }
+                    canPush = true;
                     canAdd = false;
                     canSub = false;
                     canDiv = false;
@@ -565,7 +580,6 @@ public class CalculatorActivity extends AppCompatActivity {
                         txtCalculations.setText(sb);
                         isNeg = false;
                     }
-
                     if(txtCalculations.getText().toString().endsWith(")")){
                         isNeg = true;
                     }
@@ -622,7 +636,8 @@ public class CalculatorActivity extends AppCompatActivity {
                         isNeg = true;
                     }
                 }else{
-                    txtCalculations.setText("");
+                    txtCalculations.setText("(-");
+                    isNeg = true;
                 }
             }
         });
@@ -634,17 +649,19 @@ public class CalculatorActivity extends AppCompatActivity {
                 if(txtCalculations.getText().toString().isEmpty()){
                     txtCalculations.setText("0");
                 }
+                //Will insert zero to end of calculation string if last character in string is an operator.
+                if(txtCalculations.getText().toString().endsWith("+") || txtCalculations.getText().toString().endsWith("-")){
+                    txtCalculations.setText(txtCalculations.getText() + "0");
+                }
+                //Will insert zero to end of calculation string if last character in string is an operator.
+                if(txtCalculations.getText().toString().endsWith("/") || txtCalculations.getText().toString().endsWith("*")){
+                    txtCalculations.setText(txtCalculations.getText() + "1");
+                }
                 //Will insert closed parenthesis if last number in calculation string does not have one
                 int l = txtCalculations.getText().toString().length();
                 if(txtCalculations.getText().toString().charAt(l-1) != ')' && isNeg){
                     StringBuilder sb = new StringBuilder(txtCalculations.getText().toString());
                     sb.insert(l, ')');
-                    txtCalculations.setText(sb);
-                }
-                //Will insert zero to end of calculation string if last character in string is an operator.
-                if(txtCalculations.getText().toString().charAt(l-1) == '+' || txtCalculations.getText().toString().charAt(l-1) == '-' || txtCalculations.getText().toString().charAt(l-1) == '*' || txtCalculations.getText().toString().charAt(l-1) == '/'){
-                    StringBuilder sb = new StringBuilder(txtCalculations.getText().toString());
-                    sb.insert(l, '0');
                     txtCalculations.setText(sb);
                 }
                 for (int i = txtCalculations.getText().toString().length() - 1; i >= 0 && txtCalculations.getText().toString().contains("()"); i--) {
@@ -673,16 +690,16 @@ public class CalculatorActivity extends AppCompatActivity {
                             sb.deleteCharAt(i - 1);
                             txtCalculations.setText("");
                             txtCalculations.setText(sb);
-                            canPush = true;
+                            canPush = false;
                             isDecimal = false;
                             canAdd = true;
                             canSub = true;
                             canDiv = true;
                             canMult = true;
-                        }
-                        else{
+                        }else{
                             txtCalculations.setText("");
                             txtCalculations.setText(txtCalculations.getText() + floatResult.toString());
+                            canPush = false;
                         }
                         //If NaN insert 0 to calculation string
                         if(floatResult.toString().contains("NaN") || floatResult.toString().contains("Infinity")){
@@ -691,6 +708,15 @@ public class CalculatorActivity extends AppCompatActivity {
                             canSub = false;
                             canDiv = false;
                             canMult = false;
+                            isDecimal = false;
+                            if(floatResult.toString().equals("Infinity"))
+                            {
+                                txtCalculations.setText("∞");
+                            }
+                            if(floatResult.toString().equals("-Infinity"))
+                            {
+                                txtCalculations.setText("-∞");
+                            }
                         }
                         if(floatResult.toString().startsWith("-")) {
                             StringBuilder sb = new StringBuilder(txtCalculations.getText().toString());
