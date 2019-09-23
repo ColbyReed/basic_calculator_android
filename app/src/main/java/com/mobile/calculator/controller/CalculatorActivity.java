@@ -19,10 +19,10 @@ public class CalculatorActivity extends AppCompatActivity {
     Button btnOne, btnTwo, btnThree, btnFour, btnFive, btnSix, btnSeven, btnEight, btnNine, btnZero,
             btnAddition, btnSubtract, btnDivide, btnMultiply, btnEqual, btnClear, btnBackspace, btnPosNeg, btnDecimal;
     TextView txtCalculations;
-    boolean isNeg;
-    boolean isDecimal = false;
-    boolean canAdd, canSub, canDiv, canMult;
-    boolean canPush = true;
+    boolean isNeg; //Sets calculation string to negative or positive
+    boolean isDecimal = false; //Checks if decimal placement is allowed
+    boolean canAdd, canSub, canDiv, canMult; //Checks if allowed to place operators
+    boolean canPush = true; //Checks if button can be pressed.
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,8 +52,8 @@ public class CalculatorActivity extends AppCompatActivity {
         btnDecimal = findViewById(R.id.btnDecimal);
 
         txtCalculations = findViewById(R.id.txtCalculations);
-        txtCalculations.setMovementMethod(new ScrollingMovementMethod());
-        txtCalculations.setText("");
+        txtCalculations.setMovementMethod(new ScrollingMovementMethod()); //Allows TextView to be scrollable
+        txtCalculations.setText(""); //Sets TextView to empty
         isNeg = false;
 
         btnClear.setOnClickListener(new View.OnClickListener() {
@@ -90,9 +90,11 @@ public class CalculatorActivity extends AppCompatActivity {
                         } else if (txtCalculations.getText().toString().charAt(l - 1) == ')') {
                             isNeg = true;
                         }
+                        //Allows decimal placement if deleted a decimal
                         if (txtCalculations.getText().toString().charAt(l - 1) == '.') {
                             isDecimal = false;
                         }
+                        //Enables decimal placement if operator is deleted and a closed bracket is left at end of string.
                         if ((txtCalculations.getText().toString().charAt(l - 1) == '+' || txtCalculations.getText().toString().charAt(l - 1) == '-' || txtCalculations.getText().toString().charAt(l - 1) == '*' || txtCalculations.getText().toString().charAt(l - 1) == '/') && txtCalculations.getText().toString().charAt(l - 2) == ')') {
                             isDecimal = false;
                             isNeg = false;
@@ -137,6 +139,7 @@ public class CalculatorActivity extends AppCompatActivity {
         });
 
         //Allows buttons 0 through 9 to insert respective numbers into calculation string
+        //Each number checks if allowed to be pressed, if not will clear the txt calculation to just the number and set boolean values accordingly.
         btnOne.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -350,6 +353,7 @@ public class CalculatorActivity extends AppCompatActivity {
         btnDecimal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //Determines if there are multiple unnecessary zeros, and reduces them to just "0."
                 if (canPush  && !txtCalculations.getText().toString().endsWith(")")) {
                     if(!txtCalculations.getText().toString().isEmpty() && (txtCalculations.getText().toString().contains("+00") || txtCalculations.getText().toString().contains("-00") || txtCalculations.getText().toString().contains("/00") || txtCalculations.getText().toString().contains("*00") || txtCalculations.getText().toString().startsWith("00"))){
                         for (int i = txtCalculations.getText().toString().length() - 1; i > 0 && txtCalculations.getText().toString().length() > 1 && (txtCalculations.getText().toString().contains("+0") || txtCalculations.getText().toString().contains("-0") || txtCalculations.getText().toString().contains("/0") || txtCalculations.getText().toString().contains("*0") || txtCalculations.getText().toString().startsWith("0")); i--) {
@@ -422,12 +426,14 @@ public class CalculatorActivity extends AppCompatActivity {
                         isDecimal = false;
                         isNeg = false;
                     }
+                    //Will removed empty brackets if detected.
                     if(txtCalculations.getText().toString().contains("()")){
                         btnBackspace.performClick();
                         btnBackspace.performClick();
                         btnBackspace.performClick();
                         isNeg = false;
                     }
+                    //Removes lone operators in brackets if detected
                     if(txtCalculations.getText().toString().contains("(+)") || txtCalculations.getText().toString().contains("(-)") || txtCalculations.getText().toString().contains("(*)") || txtCalculations.getText().toString().contains("(/)")){
                         btnBackspace.performClick();
                         btnBackspace.performClick();
@@ -459,12 +465,14 @@ public class CalculatorActivity extends AppCompatActivity {
                         isDecimal = false;
                         isNeg = false;
                     }
+                    //Will removed empty brackets if detected.
                     if(txtCalculations.getText().toString().contains("()")){
                         btnBackspace.performClick();
                         btnBackspace.performClick();
                         btnBackspace.performClick();
                         isNeg = false;
                     }
+                    //Removes lone operators in brackets if detected
                     if(txtCalculations.getText().toString().contains("(+)") || txtCalculations.getText().toString().contains("(-)") || txtCalculations.getText().toString().contains("(*)") || txtCalculations.getText().toString().contains("(/)")){
                         btnBackspace.performClick();
                         btnBackspace.performClick();
@@ -496,12 +504,14 @@ public class CalculatorActivity extends AppCompatActivity {
                         isDecimal = false;
                         isNeg = false;
                     }
+                    //Will removed empty brackets if detected.
                     if(txtCalculations.getText().toString().contains("()")){
                         btnBackspace.performClick();
                         btnBackspace.performClick();
                         btnBackspace.performClick();
                         isNeg = false;
                     }
+                    //Removes lone operators in brackets if detected
                     if(txtCalculations.getText().toString().contains("(+)") || txtCalculations.getText().toString().contains("(-)") || txtCalculations.getText().toString().contains("(*)") || txtCalculations.getText().toString().contains("(/)")){
                         btnBackspace.performClick();
                         btnBackspace.performClick();
@@ -533,12 +543,14 @@ public class CalculatorActivity extends AppCompatActivity {
                         isDecimal = false;
                         isNeg = false;
                     }
+                    //Will removed empty brackets if detected.
                     if(txtCalculations.getText().toString().contains("()")){
                         btnBackspace.performClick();
                         btnBackspace.performClick();
                         btnBackspace.performClick();
                         isNeg = false;
                     }
+                    //Removes lone operators in brackets if detected
                     if(txtCalculations.getText().toString().contains("(+)") || txtCalculations.getText().toString().contains("(-)") || txtCalculations.getText().toString().contains("(*)") || txtCalculations.getText().toString().contains("(/)")){
                         btnBackspace.performClick();
                         btnBackspace.performClick();
@@ -599,6 +611,7 @@ public class CalculatorActivity extends AppCompatActivity {
                             }
                         }
                         isNeg = false;
+                        //If calculation string starts with a negative, will insert open parenthesis
                         if(txtCalculations.getText().toString().startsWith("-")){
                             StringBuilder sb = new StringBuilder(txtCalculations.getText().toString());
                             sb.insert(0, '(');
@@ -606,6 +619,7 @@ public class CalculatorActivity extends AppCompatActivity {
                             isNeg = true;
                         }
                     } else if (!isNeg && !txtCalculations.getText().toString().isEmpty()) {
+                        //Removes open parenthesis if at end of string
                         if(txtCalculations.getText().toString().endsWith("(")){
                             btnBackspace.performClick();
                         }
@@ -664,6 +678,7 @@ public class CalculatorActivity extends AppCompatActivity {
                     sb.insert(l, ')');
                     txtCalculations.setText(sb);
                 }
+                //Inserts between two empty brackets if detected in string
                 for (int i = txtCalculations.getText().toString().length() - 1; i >= 0 && txtCalculations.getText().toString().contains("()"); i--) {
                     if (txtCalculations.getText().toString().charAt(i) == ')' && txtCalculations.getText().toString().charAt(i - 1) == '(') {
                         StringBuilder sb = new StringBuilder(txtCalculations.getText().toString());
@@ -718,6 +733,7 @@ public class CalculatorActivity extends AppCompatActivity {
                                 txtCalculations.setText("-∞");
                             }
                         }
+                        //If string is negative with no surrounding parenthesis, will insert parenthesis.
                         if(floatResult.toString().startsWith("-")) {
                             StringBuilder sb = new StringBuilder(txtCalculations.getText().toString());
                             sb.insert(0, '(');
@@ -726,6 +742,7 @@ public class CalculatorActivity extends AppCompatActivity {
                             isNeg = true;
                         }
                 } catch(Exception e) {
+                    //Gives error message if result string fails to parse, prints stack trace.
                     txtCalculations.setText("UwU u bwoke it");
                     canPush = false;
                     e.printStackTrace(System.out);
